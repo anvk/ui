@@ -411,12 +411,13 @@ cspace = cspace || {};
         return !!(item && item.imgThumb);
     };
 
-    cspace.recordList.selectFromList = function (model, options, dataContext, globalNavigator) {
+    cspace.recordList.selectFromList = function (model, options, dataContext, globalNavigator, recordRenderer) {
         var record = fluid.get(model, options.elPaths.items)[model.selectonIndex];
         if (!record) {
             return;
         }
         globalNavigator.events.onPerformNavigation.fire(function () {
+            recordRenderer.refreshView();
             dataContext.fetch(record.csid);
         });
     };
