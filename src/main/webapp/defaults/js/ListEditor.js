@@ -102,7 +102,32 @@ cspace = cspace || {};
                     deferRendering: true,
                     applier: "{listEditor}.options.detailsApplier",
                     model: "{listEditor}.options.detailsModel",
-                    uispec: "{listEditor}.options.uispec.details"
+                    uispec: "{listEditor}.options.uispec.details",
+                    components: {
+                        globalNavigator: {
+                            type: "cspace.util.globalNavigator",
+                            options: {
+                                listeners: {
+                                    onPerformNavigation: {
+                                        listener: "{recordEditor}.onPerformNavigation",
+                                        namespace: "onPerformNavigationRecordEditor"
+                                    }
+                                }
+                            }
+                        },
+                        templateFetcher: {
+                            options: {
+                                resources: {
+                                    template: cspace.resourceSpecExpander({
+                                        url: "%webapp/html/pages/Administration-%recordType.html",
+                                        options: {
+                                            dataType: "html"
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

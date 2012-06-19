@@ -144,7 +144,7 @@ cspace = cspace || {};
         postInitFunction: "cspace.tabs.postInit",
         finalInitFunction: "cspace.tabs.finalInit",
         components: {
-            globalNavigator: "{recordEditor}.globalNavigator",
+/*             globalNavigator: "{recordEditor}.globalNavigator", */
             tabsList: {
                 type: "cspace.tabsList"
             },

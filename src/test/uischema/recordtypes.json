@@ -3,8 +3,8 @@
     "properties": {
       "administration": {
         "default": [
-          "users", 
           "termlist", 
+          "users", 
           "role"
         ], 
         "type": "array"
