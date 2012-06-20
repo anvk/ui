@@ -1314,7 +1314,7 @@ https://source.collectionspace.org/collection-space/LICENSE.txt
         });
         fluid.demands("select", ["cspace.recordList", "cspace.admin"], {
             funcName: "cspace.recordList.selectFromList",
-            args: ["{recordList}.model", "{recordList}.options", "{listEditor}.detailsDC", "{admin}.globalNavigator"]
+            args: ["{recordList}.model", "{recordList}.options", "{listEditor}.detailsDC", "{details}.globalNavigator"]
         });
         fluid.demands("cspace.recordList.thumbRenderer", "cspace.recordList", {
             container: "{arguments}.0",

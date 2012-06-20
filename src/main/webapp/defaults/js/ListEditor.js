@@ -57,7 +57,11 @@ cspace = cspace || {};
             afterHideDetails: null,
             afterShowDetails: null,
             onListUpdate: null,
-            afterListUpdate: null
+            afterListUpdate: null,
+            onSelect: null
+        },
+        listeners: {
+            onSelect: "{listEditor}.onSelectHandler"
         },
         preInitFunction: "cspace.listEditor.preInitFunction",
         finalInitFunction: "cspace.listEditor.finalInitFunction",
@@ -71,6 +75,10 @@ cspace = cspace || {};
             addNewListRowButton: ".csc-listEditor-createNew"
         },
         urls: {},
+        selectedRecord: {
+            csid: null,
+            recordType: null
+        },
         components: {
             messageBar: "{messageBar}",
             listSource: {
@@ -93,18 +101,73 @@ cspace = cspace || {};
                         items: "items"
                     },
                     model: "{listEditor}.options.listModel",
-                    showNumberOfItems: false
+                    showNumberOfItems: false,
+                    events: {
+                        onSelect: "{listEditor}.events.onSelect"
+                    }
                 }
             },
+            details: {
+                type: "cspace.recordEditor",
+                container: "{listEditor}.dom.details",
+                options: {
+                    csid: "{listEditor}.options.selectedRecord.csid",
+                    recordType: "{listEditor}.options.selectedRecord.recordType",
+                    globalRef: "relatedModel",
+                    components: {
+                        templateFetcher: {
+                            options: {
+                                resources: {
+                                    template: cspace.resourceSpecExpander({
+                                        url: "%webapp/html/pages/Administration-%recordType.html",
+                                        options: {
+                                            dataType: "html"
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
+                },
+                createOnEvent: "onSelect"
+            }
+/*
             details: {
                 type: "cspace.recordEditor",
                 options: {
                     deferRendering: true,
                     applier: "{listEditor}.options.detailsApplier",
                     model: "{listEditor}.options.detailsModel",
-                    uispec: "{listEditor}.options.uispec.details"
+                    uispec: "{listEditor}.options.uispec.details",
+                    createOnEvent: "{listEditor}.events.selectionChange",
+                    components: {
+                        globalNavigator: {
+                            type: "cspace.util.globalNavigator",
+                            options: {
+                                listeners: {
+                                    onPerformNavigation: {
+                                        listener: "{recordEditor}.onPerformNavigation",
+                                        namespace: "onPerformNavigationRecordEditor"
+                                    }
+                                }
+                            }
+                        },
+                        templateFetcher: {
+                            options: {
+                                resources: {
+                                    template: cspace.resourceSpecExpander({
+                                        url: "%webapp/html/pages/Administration-%recordType.html",
+                                        options: {
+                                            dataType: "html"
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
                 }
             }
+*/
         },
         mergePolicy: {
             listModel: "preserve",
@@ -114,6 +177,11 @@ cspace = cspace || {};
     });
     
     cspace.listEditor.preInitFunction = function (that) {
+        that.onSelectHandler = function (record) {
+            that.options.selectedRecord.csid = record.csid;
+            that.options.selectedRecord.recordType = record.recordType;
+        };
+        
         that.options.detailsApplier = fluid.makeChangeApplier(that.options.detailsModel, {thin: true});
     };
     

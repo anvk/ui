@@ -121,7 +121,12 @@ cspace = cspace || {};
             that.locate("newRow").hide();
             row.addClass(that.options.styles.selected);
             that.applier.requestChange("selectonIndex", rows.index(row));
-            that.events.onSelect.fire();
+            var record = {
+                csid: fluid.get(that.model.items, rows.index(row)).csid,
+                recordType: that.options.recordType
+            };
+            
+            that.events.onSelect.fire(record);
         }
     
         fluid.activatable(that.locate("row"), function (event) {
