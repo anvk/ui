@@ -1881,7 +1881,7 @@ input[type=button].cs-mediaUploader-removeMedia:focus {
 .cs-media-image {
     cursor:pointer;
 }
-.cs-media-image-link {
+.cs-media-mime-link {
     background-position: center center;
     background-repeat: no-repeat;
     min-height: 128px;

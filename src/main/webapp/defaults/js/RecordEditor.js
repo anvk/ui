@@ -1458,11 +1458,15 @@ cspace = cspace || {};
         gradeNames: ["autoInit", "fluid.viewComponent"],
         finalInitFunction: "cspace.recordEditor.recordRenderer.imageDefaultClass.finalInit",
         preInitFunction: "cspace.recordEditor.recordRenderer.imageDefaultClass.preInit",
-        mediaImageLinkClass: "cs-media-mime-%fileType-link",
         mimeType: null,
         renderOnInit: true,
+        styles: {
+            mimeLink: "cs-media-mime-link",
+            mediaMimeLinkClass: "cs-media-mime-%fileType-link"
+        },
         elPaths: {
             blobMimeType: "imageData.mimeType",
+            blobImgThumb: "imageData.imgThumb",
             mimeType: "mimeType"
         }
     });
@@ -1478,9 +1482,18 @@ cspace = cspace || {};
     };
     
     cspace.recordEditor.recordRenderer.imageDefaultClass.finalInit = function (that) {
-        that.container.addClass(fluid.stringTemplate(that.options.mediaImageLinkClass, {
-            fileType: fluid.get(that.model, that.options.elPaths.mimeType)
-        }));
+        var styles = that.options.styles,
+            model = that.model,
+            elPaths = that.options.elPaths;
+        $.ajax({
+            url: fluid.get(model, elPaths.blobImgThumb),
+            type: "HEAD",
+            error: function() {
+                that.container.addClass(fluid.stringTemplate(styles.mediaMimeLinkClass, {
+                    fileType: fluid.get(model, elPaths.mimeType)
+                })).addClass(styles.mimeLink);
+            }
+        });
     };
 
     cspace.recordEditor.recordRenderer.provideProduceTree = function (recordType) {
