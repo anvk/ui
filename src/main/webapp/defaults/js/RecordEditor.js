@@ -1304,12 +1304,15 @@ cspace = cspace || {};
         options: {
             selectors: {
                 uploader: ".csc-media-upload",
-                mediaImage: ".csc-media-image"
+                mediaImage: ".csc-media-image",
+                mediaImageLink: ".csc-media-image-link"
             },
             selectorsToIgnore: "uploader",
             styles: {
-                mediaImage: "cs-media-image"
+                mediaImage: "cs-media-image",
+                mediaImageLink: "cs-media-image-link"
             },
+            mediaImageLinkClass: "cs-media-image-%fileType-link",
             components: {
                 uploader: {
                     type: "cspace.mediaUploader",
@@ -1450,6 +1453,35 @@ cspace = cspace || {};
         }
         that.refreshView();
     };
+    
+    fluid.defaults("cspace.recordEditor.recordRenderer.imageDefaultClass", {
+        gradeNames: ["autoInit", "fluid.viewComponent"],
+        finalInitFunction: "cspace.recordEditor.recordRenderer.imageDefaultClass.finalInit",
+        preInitFunction: "cspace.recordEditor.recordRenderer.imageDefaultClass.preInit",
+        mediaImageLinkClass: "cs-media-mime-%fileType-link",
+        mimeType: null,
+        renderOnInit: true,
+        elPaths: {
+            blobMimeType: "imageData.mimeType",
+            mimeType: "mimeType"
+        }
+    });
+    
+    cspace.recordEditor.recordRenderer.imageDefaultClass.preInit = function (that) {
+        var elPaths = that.options.elPaths,
+            model = that.model,
+            mimeType = fluid.get(model, elPaths.blobMimeType);
+        
+        if (mimeType) {
+            fluid.set(model, elPaths.mimeType, mimeType.substr(0, mimeType.lastIndexOf('/')));
+        }
+    };
+    
+    cspace.recordEditor.recordRenderer.imageDefaultClass.finalInit = function (that) {
+        that.container.addClass(fluid.stringTemplate(that.options.mediaImageLinkClass, {
+            fileType: fluid.get(that.model, that.options.elPaths.mimeType)
+        }));
+    };
 
     cspace.recordEditor.recordRenderer.provideProduceTree = function (recordType) {
         return recordType === "media" ? "cspace.recordEditor.recordRenderer.produceTreeMedia" : "cspace.recordEditor.recordRenderer.produceTree";
@@ -1466,6 +1498,19 @@ cspace = cspace || {};
                     }
                 }, {
                     addClass: "{styles}.mediaImage"
+                }]
+            },
+            mediaImageLink: {
+                decorators: [{
+                    addClass: "{styles}.mediaImageLink"
+                }, {
+                    type: "fluid",
+                    func: "cspace.recordEditor.recordRenderer.imageDefaultClass",
+                    options: {
+                        model: { 
+                            imageData: "${fields.blobs.0}"
+                        }
+                    }
                 }, {
                     type: "jQuery",
                     func: "click",

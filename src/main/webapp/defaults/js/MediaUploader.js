@@ -187,11 +187,14 @@ cspace = cspace || {};
     };
     
     cspace.mediaUploader.onFileSuccess = function (that, input, file, responseText, xhr) {
-        var response = JSON.parse(responseText);
-        that.applier.requestChange(that.options.elPaths.srcUri, response.file);
+        var response = JSON.parse(responseText),
+            mimeType = response.mimeType,
+            elPaths = that.options.elPaths,
+            applier = that.applier;
+        applier.requestChange(elPaths.srcUri, response.file);
         delete response.file;
-        that.applier.requestChange(that.options.elPaths.blobs, [response]);
-        that.applier.requestChange(that.options.elPaths.blobCsid, response.csid);
+        applier.requestChange(elPaths.blobs, [response]);
+        applier.requestChange(elPaths.blobCsid, response.csid);
         // TODO: When the onLink event listener triggers rerender and reinstantiation of media uploader this uploader dies :(.
         setTimeout(function () {
             that.events.onLink.fire();
@@ -201,7 +204,7 @@ cspace = cspace || {};
     cspace.mediaUploader.onFileError = function (that, file, error, responseText, xhr) {
         cspace.util.provideErrorCallback(that, that.options.urls.upload, "errorWriting")(error, responseText, xhr);
         return false;
-    };;
+    };
     
     cspace.mediaUploader.produceTree = function (that) {
         return {

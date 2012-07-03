@@ -1881,6 +1881,19 @@ input[type=button].cs-mediaUploader-removeMedia:focus {
 .cs-media-image {
     cursor:pointer;
 }
+.cs-media-image-link {
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 128px;
+    min-width: 128px;
+    display: block;
+}
+.cs-media-mime-image-link {
+    background-image: url('../images/mime_image.png');
+}
+.cs-media-mime-text-link {
+    background-image: url('../images/mime_document.png');
+}
 .cs-hierarchy-equivalentContext {
     background: #FFF;
     display: block;
