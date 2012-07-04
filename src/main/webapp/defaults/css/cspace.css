@@ -1886,7 +1886,7 @@ input[type=button].cs-mediaUploader-removeMedia:focus {
     background-repeat: no-repeat;
     min-height: 128px;
     min-width: 128px;
-    display: block;
+    float: left;
 }
 .cs-media-mime-image-link {
     background-image: url('../images/mime_image.png');

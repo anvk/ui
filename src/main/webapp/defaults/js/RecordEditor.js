@@ -1485,15 +1485,10 @@ cspace = cspace || {};
         var styles = that.options.styles,
             model = that.model,
             elPaths = that.options.elPaths;
-        $.ajax({
-            url: fluid.get(model, elPaths.blobImgThumb),
-            type: "HEAD",
-            error: function() {
-                that.container.addClass(fluid.stringTemplate(styles.mediaMimeLinkClass, {
-                    fileType: fluid.get(model, elPaths.mimeType)
-                })).addClass(styles.mimeLink);
-            }
-        });
+
+            that.container.addClass(fluid.stringTemplate(styles.mediaMimeLinkClass, {
+                fileType: fluid.get(model, elPaths.mimeType)
+            })).addClass(styles.mimeLink);
     };
 
     cspace.recordEditor.recordRenderer.provideProduceTree = function (recordType) {
