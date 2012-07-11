@@ -542,7 +542,7 @@ cspace = cspace || {};
                     value: "${" + fluid.model.composeSegments("*", key) + "}"
                 },
                 sortable: column.sortable,
-                label: globalBundle.resolve(column.name)
+                label: "hola"
             };
         });
     };
