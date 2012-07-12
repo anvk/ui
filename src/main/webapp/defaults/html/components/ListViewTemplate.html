@@ -1,16 +1,23 @@
 <div class="fl-pager list-table">
     <table class="flc-pager-body-template fl-pager-data" xmlns:rsf="http://ponder.org.uk">
         <thead class="flc-pager-body-template-content">
-            <tr class="csc-listView-headers">
-                <th class="csc-listView-header">
-                    <span class="csc-listView-header-text"></span>
-                    <a class="csc-listView-header-link"></a>
+            <tr class="csc-listView-headers" rsf:id="header:">
+                <th class="flc-pager-sort-header">
+                    <a class="csc-listView-header-link cs-listView-header-link" rsf:id="number" href="#"></a>
+                </th>
+                <th class="flc-pager-sort-header">
+                    <a class="csc-listView-header-link cs-listView-header-link" rsf:id="summary" href="#"></a>
+                </th>
+                <th class="flc-pager-sort-header">
+                    <a class="csc-listView-header-link cs-listView-header-link" rsf:id="summarylist.updatedAt" href="#"></a>
                 </th>
             </tr>
         </thead>
         <tbody class="csc-listView-rows">
-            <tr class="csc-listView-row">
-                <td class="csc-listView-column"></td>
+            <tr class="csc-listView-row cs-listView-row" rsf:id="row:" id="row">
+                <td class="csc-listView-column" rsf:id="number"></td>
+                <td class="csc-listView-column" rsf:id="summary"></td>
+                <td class="csc-listView-column" rsf:id="summarylist.updatedAt"></td>
             </tr>
         </tbody>
     </table>

@@ -120,11 +120,8 @@ cspace = cspace || {};
                         }
                     },
                     bodyRenderer: {
-                        type: "fluid.pager.selfRender",
                         options: {
-                            renderOptions: {
-                                autoBind: true
-                            }
+                            template: "{cspace.listView}.options.resources.template.resourceText"
                         }
                     },
                     pagerBar: {
