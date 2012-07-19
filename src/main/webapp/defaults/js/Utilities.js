@@ -1755,6 +1755,10 @@ fluid.registerNamespace("cspace.util");
 
     cspace.util.workflowStyler.finalInit = function (that) {
         fluid.each(that.options.rows, function (row, index) {
+            if (that.getRecordLockContainer(index).length === 0) {
+                return;
+            }
+            
             var name = "recordLock-" + index;
             that.options.components[name] = {
                 type: "cspace.util.recordLock",
